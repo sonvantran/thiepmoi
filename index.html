@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Cưới Văn Sơn & Thanh Nhàn</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind-config.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-creamy text-gray-800 font-montserrat relative overflow-x-hidden">
+
+    <!-- Nút nhạc -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-2">
+        <button id="musicToggleBtn" data-action="toggle-music" aria-label="Bật/tắt nhạc"
+                class="bg-burgundy text-amber-200 p-3 rounded-full shadow-2xl hover:scale-110 transition duration-300 border-2 border-amber-300/40 flex items-center justify-center w-12 h-12">
+            <i id="musicIcon" class="fas fa-music text-lg"></i>
+        </button>
+        <audio id="weddingAudio" loop preload="auto"><source src="yes-1-do.mp3" type="audio/mpeg"></audio>
+    </div>
+
+    <!-- Lớp hiệu ứng: bong bóng lời chúc + trái tim rơi -->
+    <div id="bubbleLayer"></div>
+    <div id="petalsContainer" class="fixed inset-0 pointer-events-none z-40 overflow-hidden"></div>
+
+    <!-- Bìa thiệp -->
+    <div id="envelopeCover" class="fixed inset-0 bg-burgundy z-50 flex flex-col items-center justify-center text-center p-6 transition-all duration-1000">
+        <div class="max-w-md w-full bg-creamy p-8 rounded-2xl shadow-2xl border-4 border-amber-300/30 text-center relative overflow-hidden transform hover:scale-[1.01] transition duration-500">
+            <div class="absolute -top-12 -left-12 w-28 h-28 bg-softrose/40 rounded-full blur-xl"></div>
+            <div class="absolute -bottom-12 -right-12 w-28 h-28 bg-softrose/40 rounded-full blur-xl"></div>
+
+            <p class="font-playfair text-burgundy tracking-widest uppercase text-xs mb-2">Save The Date</p>
+            <h1 class="font-dancing text-5xl md:text-6xl text-burgundy font-bold mb-3">Văn Sơn <br><span class="rings-wrap"><img src="images/nhan-cuoi.png" alt="Nhẫn cưới" class="rings"></span><br> Thanh Nhàn</h1>
+            <p class="font-montserrat text-sm text-gray-600 mb-6 italic">"Trân trọng kính mời quý vị tới tham dự lễ thành hôn của chúng tôi"</p>
+
+            <div class="my-6 border-t border-b border-amber-200/60 py-3">
+                <p class="text-burgundy font-playfair font-semibold text-lg">28.11.2026 - 29.11.2026</p>
+            </div>
+
+            <button data-action="open-invitation"
+                    class="mt-2 bg-burgundy hover:bg-rose-900 text-amber-200 font-montserrat px-8 py-3 rounded-full shadow-lg transition duration-300 flex items-center justify-center gap-2 mx-auto border border-amber-300/50 group">
+                <i class="fas fa-envelope-open text-amber-300 group-hover:rotate-12 transition"></i>
+                <span class="tracking-wide text-sm font-semibold">CHẠM ĐỂ MỞ THIỆP</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 bg-creamy/90 backdrop-blur-md shadow-sm z-30 border-b border-softrose/30">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="font-dancing text-2xl font-bold text-burgundy">Văn Sơn <i class="fas fa-heart text-rose-500 text-sm align-middle"></i> Thanh Nhàn</a>
+            <nav class="hidden md:flex space-x-6 text-xs uppercase tracking-wider font-semibold text-gray-700">
+                <a href="#about" class="hover:text-burgundy transition">Cặp Đôi</a>
+                <a href="#events" class="hover:text-burgundy transition">Sự Kiện</a>
+                <a href="#gallery" class="hover:text-burgundy transition">Album Ảnh</a>
+                <a href="#gift" class="hover:text-burgundy transition">Mừng Cưới</a>
+                <a href="#wishes" class="hover:text-burgundy transition">Sổ Lưu Bút</a>
+            </nav>
+            <button data-action="open-rsvp" class="bg-burgundy text-amber-100 text-xs px-4 py-2 rounded-full hover:bg-rose-900 transition font-medium shadow-md">
+                Xác Nhận Tham Dự
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero (4 phần tử .hero-item sẽ hiện lần lượt theo thứ tự) -->
+    <section id="hero" class="relative min-h-[85vh] flex items-center justify-center text-center px-4 overflow-hidden">
+        <div class="hero-bg absolute inset-0 bg-cover" style="background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.5)), url('images/anh10.jpg'); background-position: 50% 15%;"></div>
+        <div class="relative z-10 text-white w-full max-w-4xl mx-auto text-center">
+            <p class="hero-item font-playfair text-amber-200 text-sm uppercase tracking-widest mb-3">Chúng Tôi Sắp Kết Hôn</p>
+            <h1 class="hero-item font-dancing mb-4 text-white drop-shadow-md whitespace-nowrap text-center" style="font-size:clamp(1.9rem,8vw,5rem)">Văn Sơn <i class="fas fa-heart text-rose-400 align-middle mx-[.15em]" style="font-size:.5em"></i> Thanh Nhàn</h1>
+            <p class="hero-item font-montserrat font-light text-base md:text-lg mb-8 text-gray-200">Hành trình yêu thương bước sang trang mới rực rỡ và đong đầy hạnh phúc.</p>
+
+            <div id="countdown" class="hero-item grid grid-cols-4 gap-3 md:gap-6 max-w-md mx-auto my-6 text-burgundy">
+                <div class="bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-amber-200/50">
+                    <span id="days" class="block font-playfair text-2xl md:text-3xl font-bold">00</span>
+                    <span class="text-[10px] uppercase tracking-wider font-semibold">Ngày</span>
+                </div>
+                <div class="bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-amber-200/50">
+                    <span id="hours" class="block font-playfair text-2xl md:text-3xl font-bold">00</span>
+                    <span class="text-[10px] uppercase tracking-wider font-semibold">Giờ</span>
+                </div>
+                <div class="bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-amber-200/50">
+                    <span id="minutes" class="block font-playfair text-2xl md:text-3xl font-bold">00</span>
+                    <span class="text-[10px] uppercase tracking-wider font-semibold">Phút</span>
+                </div>
+                <div class="bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg border border-amber-200/50">
+                    <span id="seconds" class="block font-playfair text-2xl md:text-3xl font-bold">00</span>
+                    <span class="text-[10px] uppercase tracking-wider font-semibold">Giây</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cặp đôi (render từ FAMILIES trong js/config.js) -->
+    <section id="about" class="py-20 px-4 max-w-5xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-burgundy font-dancing text-3xl">Chú Rể & Cô Dâu</span>
+            <h2 class="font-playfair text-3xl md:text-4xl font-bold text-gray-800 mt-1">Thông Tin Hai Bên Gia Đình</h2>
+            <div class="w-16 h-0.5 bg-rosegold mx-auto mt-4"></div>
+        </div>
+        <div id="familyCards" class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"></div>
+    </section>
+
+    <!-- Sự kiện (render từ EVENTS trong js/config.js) -->
+    <section id="events" class="py-20 bg-softrose/20 px-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-burgundy font-dancing text-3xl">Lịch Trình</span>
+                <h2 class="font-playfair text-3xl md:text-4xl font-bold text-gray-800 mt-1">Sự Kiện Trọng Đại</h2>
+                <div class="w-16 h-0.5 bg-rosegold mx-auto mt-4"></div>
+            </div>
+            <div id="eventCards" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+        </div>
+    </section>
+
+    <!-- Album (render từ GALLERY trong js/config.js) -->
+    <section id="gallery" class="py-20 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-burgundy font-dancing text-3xl">Kỷ Niệm</span>
+            <h2 class="font-playfair text-3xl md:text-4xl font-bold text-gray-800 mt-1">Album Ảnh Cưới</h2>
+            <div class="w-16 h-0.5 bg-rosegold mx-auto mt-4"></div>
+        </div>
+        <div id="galleryGrid"></div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightboxModal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4">
+        <button data-action="close-lightbox" aria-label="Đóng" class="absolute top-6 right-6 text-white text-3xl hover:text-amber-300 z-10"><i class="fas fa-times"></i></button>
+        <button data-action="prev-image" aria-label="Ảnh trước" class="absolute left-4 text-white text-3xl hover:text-amber-300 p-2"><i class="fas fa-chevron-left"></i></button>
+        <div class="max-w-4xl max-h-[85vh] overflow-hidden rounded-lg">
+            <img id="lightboxImg" src="" alt="Album photo" class="max-w-full max-h-[85vh] object-contain mx-auto transition duration-300">
+        </div>
+        <button data-action="next-image" aria-label="Ảnh sau" class="absolute right-4 text-white text-3xl hover:text-amber-300 p-2"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- Mừng cưới -->
+    <section id="gift" class="py-20 px-4 max-w-4xl mx-auto text-center">
+        <h2 class="font-dancing text-5xl md:text-6xl text-burgundy mb-4">Hộp Mừng Cưới</h2>
+        <p class="text-gray-600 mb-8">Cảm ơn tất cả các tình cảm mà mọi người đã dành cho vợ chồng em <span class="text-rose-500"><i class="fas fa-heart"></i></span></p>
+        <button id="giftBtn" data-action="toggle-gift" aria-expanded="false" aria-controls="giftQr" class="gift-box mx-auto" title="Bấm để mở hộp quà">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+                <g fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+                    <path d="M20 46 L50 56 L80 46 L80 80 L50 90 L20 80Z"/><path d="M50 56 V90"/>
+                    <path d="M16 36 L50 46 L84 36 L50 28Z"/><path d="M50 46 V28"/>
+                    <path d="M50 28 C40 10 26 12 32 22 C36 28 46 28 50 28 C54 28 64 28 68 22 C74 12 60 10 50 28Z"/>
+                    <path d="M41 40 V70 M59 40 V70" opacity=".6"/>
+                </g>
+            </svg>
+        </button>
+        <p class="text-xs text-gray-500 mt-3 uppercase tracking-wider">Chạm vào hộp quà</p>
+        <div id="giftQr" class="gift-qr" aria-hidden="true">
+            <div class="gift-qr-inner">
+                <div class="qr-card">
+                    <h3 class="font-dancing text-3xl text-burgundy mb-3">Chú Rể Văn Sơn</h3>
+                    <img class="qr-img" src="images/qr-chu-re.jpg" alt="QR mừng cưới chú rể">
+                </div>
+                <div class="qr-card">
+                    <h3 class="font-dancing text-3xl text-burgundy mb-3">Cô Dâu Thanh Nhàn</h3>
+                    <img class="qr-img" src="images/qr-co-dau.jpg?v=3" alt="QR mừng cưới cô dâu">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sổ lưu bút -->
+    <section id="wishes" class="py-20 px-4 max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <span class="text-burgundy font-dancing text-3xl">Gửi Lời Chúc</span>
+            <h2 class="font-playfair text-3xl md:text-4xl font-bold text-gray-800 mt-1">Sổ Lưu Bút Online</h2>
+            <div class="w-16 h-0.5 bg-rosegold mx-auto mt-4"></div>
+        </div>
+
+        <form id="wishForm" class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-softrose/40 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase">Tên của bạn *</label>
+                    <input type="text" id="wishName" required placeholder="Nhập tên..." class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-burgundy">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase">Mối quan hệ</label>
+                    <select id="wishRole" class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-burgundy">
+                        <option value="Bạn Chú Rể">Bạn Chú Rể</option>
+                        <option value="Bạn Cô Dâu">Bạn Cô Dâu</option>
+                        <option value="Người Thân">Người Thân</option>
+                        <option value="Đồng Nghiệp">Đồng Nghiệp</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase">Lời chúc mừng *</label>
+                <textarea id="wishMessage" required rows="3" placeholder="Gửi những lời chúc tốt đẹp nhất..." class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-burgundy"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-burgundy hover:bg-rose-900 text-amber-100 text-sm font-semibold py-3 rounded-lg transition shadow-md">
+                <i class="fas fa-paper-plane mr-2"></i> Gửi Lời Chúc
+            </button>
+        </form>
+
+        <div id="wishesContainer" class="space-y-4 max-h-96 overflow-y-auto pr-2"></div>
+    </section>
+
+    <!-- Modal RSVP -->
+    <div id="rsvpModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-lg rounded-2xl p-6 md:p-8 shadow-2xl relative border border-amber-200/50">
+            <button data-action="close-rsvp" aria-label="Đóng" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl"><i class="fas fa-times"></i></button>
+            <h3 class="font-playfair text-2xl font-bold text-burgundy text-center mb-2">Xác Nhận Tham Dự</h3>
+            <p class="text-xs text-center text-gray-500 mb-6">Vui lòng phản hồi trước ngày 22/11/2026 để chuẩn bị đón tiếp chu đáo nhất.</p>
+
+            <form id="rsvpForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase">Họ và Tên *</label>
+                    <input type="text" id="rsvpName" required class="w-full px-4 py-2 text-sm border rounded-lg focus:border-burgundy focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase">Số Điện Thoại</label>
+                    <input type="tel" id="rsvpPhone" class="w-full px-4 py-2 text-sm border rounded-lg focus:border-burgundy focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase">Xác nhận tham dự</label>
+                    <select id="rsvpStatus" class="w-full px-4 py-2 text-sm border rounded-lg focus:border-burgundy focus:outline-none">
+                        <option value="Sẽ tham dự">Sẽ tham dự tiệc</option>
+                        <option value="Rất tiếc không thể tham dự">Rất tiếc không thể tham dự</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1 uppercase">Số người tham dự</label>
+                    <input type="number" id="rsvpCount" min="1" max="20" value="1" class="w-full px-4 py-2 text-sm border rounded-lg focus:border-burgundy focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-burgundy hover:bg-rose-900 text-amber-100 text-sm font-semibold py-3 rounded-lg transition shadow-md mt-4">
+                    Gửi Phản Hồi
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-6 py-3 rounded-full shadow-2xl opacity-0 pointer-events-none transition-all duration-300 z-50 flex items-center gap-2">
+        <i class="fas fa-check-circle text-green-400"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
