@@ -127,7 +127,7 @@ const GALLERY = {
   focusMobile: {
      'images/anh01.JPG': '50% 10%',
      'images/anh03.JPG': '50% 0%',
-     'images/anh06.JPG': '50% 15%',
+     'images/anh06.JPG': '50% 55%',
      'images/anh09.JPG': '50% 45%',
      // chỉ cần liệt kê ảnh nào trên điện thoại bị cắt sai
   },
