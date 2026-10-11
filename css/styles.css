@@ -71,24 +71,25 @@
 /* Dải phim chạy ngang trước khi lộ ảnh đầu trang */
 .filmreel {
   position: absolute; inset: 0; z-index: 30; overflow: hidden; display: flex; align-items: center;
-  background: radial-gradient(circle at 50% 50%, #3a1018 0%, #14070a 75%);
+  background: radial-gradient(circle at 50% 50%, #FFF6F0 0%, #F3D9DC 85%);
   transition: opacity .9s ease, visibility .9s;
 }
 .filmreel.done { opacity: 0; visibility: hidden; }
 .filmreel::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, .035) 0 2px, transparent 2px 4px);
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(107, 29, 47, .05) 0 2px, transparent 2px 4px);
   animation: filmFlicker .18s steps(2) infinite;
 }
 @keyframes filmFlicker { 50% { opacity: .5; } }
 .film-strip {
+  position: relative; z-index: 1;
   display: flex; flex-direction: column; flex: none; width: max-content; padding: 10px 0;
-  background: #0b0b0b; border-radius: 4px; box-shadow: 0 10px 40px rgba(0, 0, 0, .7);
-  transform: rotate(-3deg); animation: filmRun 10s linear forwards;
+  background: #0b0b0b; border-radius: 4px; box-shadow: 0 10px 40px rgba(107, 29, 47, .35);
+  transform: rotate(-1.5deg); animation: filmRun 10s linear forwards;
 }
 @keyframes filmRun {
-  from { transform: translateX(100vw) rotate(-3deg); }
-  to   { transform: translateX(-100%) rotate(-3deg); }
+  from { transform: translateX(100vw) rotate(-1.5deg); }
+  to   { transform: translateX(-100%) rotate(-1.5deg); }
 }
 .film-holes {
   height: 18px; margin: 0 0 8px; opacity: .9;
@@ -98,7 +99,7 @@
 .film-frames { display: flex; gap: 10px; padding: 0 6px; }
 .film-frames img {
   width: clamp(210px, 62vw, 380px); aspect-ratio: 4 / 5; object-fit: cover;
-  border: 2px solid #1c1c1c; filter: sepia(.35) contrast(1.05);
+  border: 2px solid #1c1c1c; filter: sepia(.12) contrast(1.03);
 }
 
 /* Nhẫn cưới trên bìa thiệp */
