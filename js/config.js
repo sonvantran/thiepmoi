@@ -61,38 +61,119 @@ const FAMILIES = [
    accent: 'burgundy' | 'rosegold' (màu viền trái + icon)
    badgeClass: class Tailwind của nhãn nhỏ phía trên
    Thứ tự trong mảng = thứ tự hiển thị trên trang. */
-const EVENTS = [
-  {
-    badge: 'Tiệc Cưới',
-    badgeClass: 'bg-red-100 text-burgundy',
-    icon: 'fa-heart',
-    accent: 'burgundy',
-    title: 'Tiệc Cưới Nhà Trai',
-    time: '17h Ngày 28 tháng 11 năm 2026',
-    place: 'Nhà trai - Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội',
-    mapUrl: 'https://maps.app.goo.gl/FQakk4ESac3irEr37',
-  },
-  {
-    badge: 'Lễ Vu Quy',
-    badgeClass: 'bg-softrose/40 text-burgundy',
-    icon: 'fa-heart',
-    accent: 'burgundy',
-    title: 'Lễ Ăn Hỏi & Đón Dâu Nhà Gái',
-    time: '7h Ngày 29 tháng 11 năm 2026',
-    place: 'Nhà gái - Xóm Phú Cường, xã Phú Thịnh, Thái Nguyên',
-    mapUrl: 'https://maps.app.goo.gl/BWRFewJQF7EShqdD8',
-  },
-  {
-    badge: 'Lễ Thành Hôn',
-    badgeClass: 'bg-champagne text-rosegold',
-    icon: 'fa-glass-cheers',
-    accent: 'rosegold',
-    title: 'Lễ Thành Hôn Nhà Trai',
-    time: '11h Ngày 29 tháng 11 năm 2026',
-    place: 'Nhà trai - Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội',
-    mapUrl: 'https://maps.app.goo.gl/FQakk4ESac3irEr37',
-  },
-];
+// const EVENTS = [
+//   {
+//     badge: 'Tiệc Cưới',
+//     badgeClass: 'bg-red-100 text-burgundy',
+//     icon: 'fa-heart',
+//     accent: 'burgundy',
+//     title: 'Tiệc Cưới Nhà Trai',
+//     time: '17h Ngày 28 tháng 11 năm 2026',
+//     place: 'Nhà trai - Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội',
+//     mapUrl: 'https://maps.app.goo.gl/FQakk4ESac3irEr37',
+//   },
+//   {
+//     badge: 'Lễ Vu Quy',
+//     badgeClass: 'bg-softrose/40 text-burgundy',
+//     icon: 'fa-heart',
+//     accent: 'burgundy',
+//     title: 'Lễ Ăn Hỏi & Đón Dâu Nhà Gái',
+//     time: '7h Ngày 29 tháng 11 năm 2026',
+//     place: 'Nhà gái - Xóm Phú Cường, xã Phú Thịnh, Thái Nguyên',
+//     mapUrl: 'https://maps.app.goo.gl/BWRFewJQF7EShqdD8',
+//   },
+//   {
+//     badge: 'Lễ Thành Hôn',
+//     badgeClass: 'bg-champagne text-rosegold',
+//     icon: 'fa-glass-cheers',
+//     accent: 'rosegold',
+//     title: 'Lễ Thành Hôn Nhà Trai',
+//     time: '11h Ngày 29 tháng 11 năm 2026',
+//     place: 'Nhà trai - Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội',
+//     mapUrl: 'https://maps.app.goo.gl/FQakk4ESac3irEr37',
+//   },
+// ];
+
+/* ---------- Chọn bản thiệp theo link ----------
+   Nhà trai:  https://sonvantran.github.io/thiepmoi/
+   Nhà gái:   https://sonvantran.github.io/thiepmoi/?ben=gai */
+const SIDE = new URLSearchParams(location.search).get('ben') === 'gai' ? 'gai' : 'trai';
+
+/* ---------- Sự kiện (mỗi bên một danh sách) ----------
+   accent: 'burgundy' | 'rosegold' (màu viền trái + icon)
+   badgeClass: class Tailwind của nhãn nhỏ phía trên
+   Thứ tự trong mảng = thứ tự hiển thị trên trang. */
+const EVENTS_BY_SIDE = {
+  // ===== Bản gửi khách nhà trai =====
+  trai: [
+    {
+      badge: 'Tiệc Cưới',
+      badgeClass: 'bg-red-100 text-burgundy',
+      icon: 'fa-heart',
+      accent: 'burgundy',
+      title: 'Tiệc Cưới Nhà Trai',
+      time: '17h Ngày 28 tháng 11 năm 2026',
+      place: 'Nhà trai - Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội',
+      mapUrl: 'https://maps.app.goo.gl/FQakk4ESac3irEr37',
+    },
+    {
+      badge: 'Lễ Vu Quy',
+      badgeClass: 'bg-softrose/40 text-burgundy',
+      icon: 'fa-heart',
+      accent: 'burgundy',
+      title: 'Lễ Ăn Hỏi & Đón Dâu Nhà Gái',
+      time: '7h Ngày 29 tháng 11 năm 2026',
+      place: 'Nhà gái - Xóm Phú Cường, xã Phú Thịnh, Thái Nguyên',
+      mapUrl: 'https://maps.app.goo.gl/BWRFewJQF7EShqdD8',
+    },
+    {
+      badge: 'Lễ Thành Hôn',
+      badgeClass: 'bg-champagne text-rosegold',
+      icon: 'fa-glass-cheers',
+      accent: 'rosegold',
+      title: 'Lễ Thành Hôn Nhà Trai',
+      time: '11h Ngày 29 tháng 11 năm 2026',
+      place: 'Nhà trai - Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội',
+      mapUrl: 'https://maps.app.goo.gl/FQakk4ESac3irEr37',
+    },
+  ],
+
+  // ===== Bản gửi khách nhà gái (thêm ?ben=gai vào link) =====
+  gai: [
+    {
+      badge: 'Tiệc Cưới',
+      badgeClass: 'bg-red-100 text-burgundy',
+      icon: 'fa-heart',
+      accent: 'burgundy',
+      title: 'Tiệc Cưới Nhà Gái',
+      time: '17h Ngày 28 tháng 11 năm 2026',          // <-- bạn điền giờ và ngày thật
+      place: 'Nhà gái - Xóm Phú Cường, xã Phú Thịnh, Thái Nguyên', // <-- kiểm tra lại địa điểm tổ chức tiệc
+      mapUrl: 'https://maps.app.goo.gl/BWRFewJQF7EShqdD8',
+    },
+    {
+      badge: 'Lễ Vu Quy',
+      badgeClass: 'bg-softrose/40 text-burgundy',
+      icon: 'fa-heart',
+      accent: 'burgundy',
+      title: 'Lễ Vu Quy',
+      time: '7h Ngày 29 tháng 11 năm 2026',
+      place: 'Nhà gái - Xóm Phú Cường, xã Phú Thịnh, Thái Nguyên',
+      mapUrl: 'https://maps.app.goo.gl/BWRFewJQF7EShqdD8',
+    },
+    {
+      badge: 'Lễ Thành Hôn',
+      badgeClass: 'bg-champagne text-rosegold',
+      icon: 'fa-glass-cheers',
+      accent: 'rosegold',
+      title: 'Lễ Thành Hôn Nhà Trai',
+      time: '11h Ngày 29 tháng 11 năm 2026',
+      place: 'Nhà trai - Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội',
+      mapUrl: 'https://maps.app.goo.gl/FQakk4ESac3irEr37',
+    },
+  ],
+};
+
+const EVENTS = EVENTS_BY_SIDE[SIDE];
 
 /* ---------- Album ảnh ----------
    spans[i] = [cột PC, hàng PC, cột mobile, hàng mobile] của ảnh thứ i
