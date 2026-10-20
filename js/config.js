@@ -200,7 +200,7 @@ const GALLERY = {
      'images/anh07.JPG': '50% 25%',
      'images/anh08.JPG': '50% 100%',
      'images/anh09.JPG': '50% 90%',
-     'images/anh13.JPG': '50% 85%',
+     'images/anh13.JPG': '50% 70%',
      'images/anh11.JPG': '50% 55%',
      'images/anh12.JPG': '50% 25%',
   },
