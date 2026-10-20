@@ -1,5 +1,3 @@
-/* Cấu hình theme Tailwind (màu + font).
-   Nếu đổi màu ở đây, nhớ đổi cả biến CSS tương ứng ở đầu css/styles.css. */
 tailwind.config = {
   theme: {
     extend: {

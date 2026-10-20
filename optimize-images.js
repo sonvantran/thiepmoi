@@ -1,10 +1,3 @@
-/* =====================================================================
-   optimize-images.js — tạo bản nhẹ của ảnh trong thư mục images/
-   Chạy:  node optimize-images.js
-   Kết quả (ảnh gốc KHÔNG bị sửa):
-     images/thumb/<tên ảnh>  rộng tối đa 1000px  -> album, cuộn phim, ảnh đại diện
-     images/large/<tên ảnh>  rộng tối đa 2000px  -> lightbox, ảnh nền hero
-   ===================================================================== */
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
@@ -14,7 +7,7 @@ const SIZES = [
   { dir: 'thumb', width: 1000, quality: 75 },
   { dir: 'large', width: 2000, quality: 80 },
 ];
-const SKIP = /^qr-/i; // không nén ảnh QR để giữ nét cho việc quét mã
+const SKIP = /^qr-/i;
 
 const kb = (bytes) => Math.round(bytes / 1024) + ' KB';
 
@@ -31,7 +24,7 @@ const kb = (bytes) => Math.round(bytes / 1024) + ' KB';
     for (const s of SIZES) {
       const output = path.join(SRC, s.dir, f);
       await sharp(input)
-        .rotate() // áp dụng hướng xoay từ EXIF để ảnh không bị nghiêng sau khi xóa metadata
+        .rotate()
         .resize({ width: s.width, withoutEnlargement: true })
         .jpeg({ quality: s.quality, mozjpeg: true })
         .toFile(output);

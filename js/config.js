@@ -1,31 +1,16 @@
-/* =====================================================================
-   config.js — TOÀN BỘ nội dung & cài đặt có thể chỉnh nằm ở đây.
-   Muốn đổi ngày giờ, địa chỉ, ảnh, thứ tự sự kiện... chỉ cần sửa file này.
-   ===================================================================== */
 
-/* ---------- Cài đặt chung ---------- */
 const CONFIG = {
-  // Mốc đếm ngược
   weddingDate: '2026-11-29T07:00:00+07:00',
-
-  // Link Web App Google Apps Script (lưu lời chúc + RSVP vào Google Sheet).
-  // Để trống '' = chỉ lưu tạm trên máy khách.
   wishApiUrl: 'https://script.google.com/macros/s/AKfycby2DXcEe7qkWXJfGBPH61DBa3fZYCd7G1i-xV7mEpmznA1Xq2t6Ovy0XkdCyUEpTcVxew/exec',
 
-  wishRefreshMs: 10000,        // tải lại lời chúc mới từ Google Sheet
-  bubbleGapMs: [3000, 5000],   // khoảng cách giữa 2 bong bóng lời chúc
-  bubbleLifeMs: [5000, 7000],  // thời gian mỗi bong bóng hiển thị
-  petalCount: 15,              // số trái tim rơi
+  wishRefreshMs: 10000,
+  bubbleGapMs: [3000, 5000],
+  bubbleLifeMs: [5000, 7000],
+  petalCount: 15,
 
-  // Cuộn phim mở đầu: số thứ tự ảnh (anhXX.JPG) và thời lượng (ms)
-  filmReel: { photos: [10, 1, 4, 7, 2, 9, 12], durationMs: 9300 },
+  filmReel: { photos: [5, 1, 7, 4, 9, 2, 11], durationMs: 9300 },
 };
 
-/* ---------- Thông tin hai bên gia đình ----------
-   Chỉnh ảnh đại diện:
-   - photoPosition: phần nào của ảnh được giữ lại trong khung vuông ('X% Y%', mặc định '50% 50%')
-   - photoZoom:     mức phóng to (mặc định 1 = không zoom)
-   - photoFocus:    tâm zoom — chỉ có tác dụng khi photoZoom lớn hơn 1 */
 const FAMILIES = [
   {
     role: 'Chú Rể',
@@ -57,54 +42,9 @@ const FAMILIES = [
   },
 ];
 
-/* ---------- Sự kiện ----------
-   accent: 'burgundy' | 'rosegold' (màu viền trái + icon)
-   badgeClass: class Tailwind của nhãn nhỏ phía trên
-   Thứ tự trong mảng = thứ tự hiển thị trên trang. */
-// const EVENTS = [
-//   {
-//     badge: 'Tiệc Cưới',
-//     badgeClass: 'bg-red-100 text-burgundy',
-//     icon: 'fa-heart',
-//     accent: 'burgundy',
-//     title: 'Tiệc Cưới Nhà Trai',
-//     time: '17h Ngày 28 tháng 11 năm 2026',
-//     place: 'Nhà trai - Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội',
-//     mapUrl: 'https://maps.app.goo.gl/FQakk4ESac3irEr37',
-//   },
-//   {
-//     badge: 'Lễ Vu Quy',
-//     badgeClass: 'bg-softrose/40 text-burgundy',
-//     icon: 'fa-heart',
-//     accent: 'burgundy',
-//     title: 'Lễ Ăn Hỏi & Đón Dâu Nhà Gái',
-//     time: '7h Ngày 29 tháng 11 năm 2026',
-//     place: 'Nhà gái - Xóm Phú Cường, xã Phú Thịnh, Thái Nguyên',
-//     mapUrl: 'https://maps.app.goo.gl/BWRFewJQF7EShqdD8',
-//   },
-//   {
-//     badge: 'Lễ Thành Hôn',
-//     badgeClass: 'bg-champagne text-rosegold',
-//     icon: 'fa-glass-cheers',
-//     accent: 'rosegold',
-//     title: 'Lễ Thành Hôn Nhà Trai',
-//     time: '11h Ngày 29 tháng 11 năm 2026',
-//     place: 'Nhà trai - Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội',
-//     mapUrl: 'https://maps.app.goo.gl/FQakk4ESac3irEr37',
-//   },
-// ];
-
-/* ---------- Chọn bản thiệp theo link ----------
-   Nhà trai:  https://sonvantran.github.io/thiepmoi/
-   Nhà gái:   https://sonvantran.github.io/thiepmoi/?ben=gai */
 const SIDE = new URLSearchParams(location.search).get('ben') === 'gai' ? 'gai' : 'trai';
 
-/* ---------- Sự kiện (mỗi bên một danh sách) ----------
-   accent: 'burgundy' | 'rosegold' (màu viền trái + icon)
-   badgeClass: class Tailwind của nhãn nhỏ phía trên
-   Thứ tự trong mảng = thứ tự hiển thị trên trang. */
 const EVENTS_BY_SIDE = {
-  // ===== Bản gửi khách nhà trai =====
   trai: [
     {
       badge: 'Tiệc Cưới',
@@ -138,7 +78,6 @@ const EVENTS_BY_SIDE = {
     },
   ],
 
-  // ===== Bản gửi khách nhà gái (thêm ?ben=gai vào link) =====
   gai: [
     {
       badge: 'Tiệc Cưới',
@@ -146,8 +85,8 @@ const EVENTS_BY_SIDE = {
       icon: 'fa-heart',
       accent: 'burgundy',
       title: 'Tiệc Cưới Nhà Gái',
-      time: '17h Ngày 28 tháng 11 năm 2026',          // <-- bạn điền giờ và ngày thật
-      place: 'Nhà gái - Xóm Phú Cường, xã Phú Thịnh, Thái Nguyên', // <-- kiểm tra lại địa điểm tổ chức tiệc
+      time: '17h Ngày 28 tháng 11 năm 2026',
+      place: 'Nhà gái - Xóm Phú Cường, xã Phú Thịnh, Thái Nguyên',
       mapUrl: 'https://maps.app.goo.gl/BWRFewJQF7EShqdD8',
     },
     {
@@ -175,9 +114,6 @@ const EVENTS_BY_SIDE = {
 
 const EVENTS = EVENTS_BY_SIDE[SIDE];
 
-/* ---------- Album ảnh ----------
-   spans[i] = [cột PC, hàng PC, cột mobile, hàng mobile] của ảnh thứ i
-   (đã chia sẵn để 12 ảnh lấp đầy lưới, không để trống). */
 const GALLERY = {
   images: Array.from({ length: 12 }, (_, i) => `images/anh${String(i + 1).padStart(2, '0')}.JPG`)
   .map((src, i) => (i === 9 ? 'images/anh13.JPG' : src)),
@@ -187,10 +123,6 @@ const GALLERY = {
   ],
   defaultSpan: [2, 3, 1, 3],
 
-  // Chỉnh phần ảnh nào được giữ lại trong ô (ảnh luôn bị cắt cho vừa ô). Định dạng 'X% Y%':
-  //   Y: 0% = giữ phần trên của ảnh, 100% = giữ phần dưới   (kéo ảnh "lên/xuống")
-  //   X: 0% = giữ phần bên trái, 100% = giữ phần bên phải   (kéo ảnh "trái/phải")
-  // Ảnh không khai báo thì mặc định '50% 50%' (cắt ở giữa). Khóa là đường dẫn ảnh nên đổi thứ tự vẫn đúng.
   focus: {
      'images/anh02.JPG': '50% 25%',
      'images/anh03.JPG': '50% 15%',
@@ -210,11 +142,9 @@ const GALLERY = {
      'images/anh03.JPG': '50% 0%',
      'images/anh06.JPG': '50% 90%',
      'images/anh09.JPG': '50% 50%',
-     // chỉ cần liệt kê ảnh nào trên điện thoại bị cắt sai
   },
 };
 
-/* ---------- Lời chúc mẫu (hiện khi chưa có dữ liệu thật) ---------- */
 const INITIAL_WISHES = [
   { name: 'Em Dũng', role: 'Đồng Nghiệp', message: 'Chúc hai anh chị trăm năm hạnh phúc, sớm đón quý tử nhé!', time: '' },
   { name: 'Thành', role: 'Bạn Chú Rể', message: 'Mừng ngày chung đôi của đôi vợ chồng trẻ! Chúc hai bạn luôn tràn ngập nụ cười.', time: '' },

@@ -1,27 +1,14 @@
-/* =====================================================================
-   styles.css — CSS tùy chỉnh (phần Tailwind không làm được)
-   Mục lục:
-   1. Biến màu        6. Ảnh nghiêng 3D (tilt-in)
-   2. Base            7. Album + phong thư
-   3. Hoa/Trái tim    8. Thiên thần (cupid)
-   4. Bong bóng       9. Hộp mừng cưới + QR
-   5. Hero + cuộn phim
-   ===================================================================== */
-
-/* ---------- 1. Biến màu (đồng bộ với js/tailwind-config.js) ---------- */
 :root {
   --burgundy: #6B1D2F;
   --softrose: #E8C5C8;
   --creamy: #FFFDF9;
   --gift-red: #7a0000;
-  /* Phong thư xanh trong album */
   --env-bg: #E6F2FD;
   --env-line: rgba(91, 155, 213, .28);
   --env-flap-top: #C4DDF5;
   --env-flap-bottom: #A9CCEE;
 }
 
-/* ---------- 2. Base ---------- */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--creamy); }
 ::-webkit-scrollbar-thumb { background: var(--softrose); border-radius: 3px; }
@@ -30,14 +17,12 @@
 .spin-music { animation: spinSlow 6s linear infinite; }
 @keyframes spinSlow { to { transform: rotate(360deg); } }
 
-/* ---------- 3. Trái tim rơi ---------- */
 .petal { position: fixed; pointer-events: none; z-index: 99; animation: floatPetal linear infinite; }
 @keyframes floatPetal {
   0%   { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 1; }
   100% { transform: translateY(105vh) rotate(360deg) translateX(50px); opacity: .2; }
 }
 
-/* ---------- 4. Bong bóng lời chúc ---------- */
 #bubbleLayer { position: fixed; inset: auto 0 0 0; height: 100vh; pointer-events: none; z-index: 45; overflow: hidden; }
 .wish-bubble {
   position: absolute; bottom: -120px; max-width: min(260px, 70vw);
@@ -55,8 +40,6 @@
   100% { transform: translateY(-75vh) scale(1); opacity: 0; }
 }
 
-/* ---------- 5. Hero + cuộn phim ---------- */
-/* Ảnh nền zoom chậm, chữ hiện dần từ mờ sang rõ (kích hoạt khi #hero có class .play) */
 .hero-bg { transform: scale(1.25); filter: blur(6px); }
 .hero-item { opacity: 0; transform: translateY(24px); filter: blur(8px); }
 #hero.play .hero-bg { animation: heroZoom 3.2s cubic-bezier(.2, .7, .2, 1) forwards; }
@@ -68,7 +51,6 @@
 @keyframes heroZoom { to { transform: scale(1); filter: blur(0); } }
 @keyframes heroIn { to { opacity: 1; transform: none; filter: blur(0); } }
 
-/* Dải phim chạy ngang trước khi lộ ảnh đầu trang */
 .filmreel {
   position: absolute; inset: 0; z-index: 30; overflow: hidden; display: flex; align-items: center;
   background: radial-gradient(circle at 50% 50%, #FFF6F0 0%, #F3D9DC 85%);
@@ -102,7 +84,6 @@
   border: 2px solid #1c1c1c; filter: sepia(.12) contrast(1.03);
 }
 
-/* Nhẫn cưới trên bìa thiệp */
 .rings-wrap { display: inline-block; line-height: 0; }
 .rings {
   width: 140px; height: 140px; margin: -34px 0 -30px; max-width: none; object-fit: contain;
@@ -110,7 +91,6 @@
 }
 @keyframes ringsGlow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 
-/* ---------- 6. Ảnh nghiêng 3D rồi trượt về vị trí khi cuộn tới ---------- */
 .tilt-in {
   opacity: 0; filter: blur(4px);
   transform: perspective(900px) rotateX(14deg) rotateY(-12deg) translateY(50px) scale(.92);
@@ -119,7 +99,6 @@
 .tilt-in:nth-child(even) { transform: perspective(900px) rotateX(14deg) rotateY(12deg) translateY(50px) scale(.92); }
 .tilt-in.seen { opacity: 1; transform: none; filter: none; }
 
-/* ---------- 7. Album mosaic + hiệu ứng mở phong thư ---------- */
 #galleryGrid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 95px; gap: 10px; grid-auto-flow: dense; }
 .g-tile { grid-column: span var(--mc, 1); grid-row: span var(--mr, 3); }
 @media (min-width: 768px) {
@@ -127,8 +106,6 @@
   .g-tile { grid-column: span var(--dc, 2); grid-row: span var(--dr, 3); }
 }
 
-/* Vị trí cắt ảnh trong ô: PC dùng --fp-pc (GALLERY.focus),
-   điện thoại (< 768px, cùng ngưỡng với lưới ở trên) dùng --fp-m (GALLERY.focusMobile). */
 .g-img { object-position: var(--fp-pc, 50% 50%); }
 @media (max-width: 767px) {
   .g-img { object-position: var(--fp-m, 50% 50%); }
@@ -165,7 +142,6 @@
 .letter.seen .photo { opacity: 1; transform: none; }
 .letter.seen .env { opacity: 0; }
 
-/* ---------- 8. Thiên thần bay lơ lửng, thả trái tim ---------- */
 .cupid { position: absolute; top: 18px; width: 92px; pointer-events: none; animation: cupidFloat 3.6s ease-in-out infinite; }
 .cupid img { width: 100%; display: block; filter: drop-shadow(0 4px 6px rgba(107, 29, 47, .18)); }
 .cupid-l { left: 14px; }
@@ -188,7 +164,6 @@
   .cupid-r { right: 6px; }
 }
 
-/* ---------- 9. Hộp mừng cưới + QR ---------- */
 .gift-box {
   width: 124px; height: 124px; border: 0; border-radius: 26px; cursor: pointer; display: grid; place-items: center;
   background: var(--gift-red); box-shadow: 0 10px 24px rgba(107, 29, 47, .35);
@@ -218,7 +193,6 @@
 .qr-card img { width: 100%; max-height: 70vh; object-fit: contain; border-radius: 10px; display: block; }
 .qr-missing { aspect-ratio: 1; display: grid; place-items: center; border: 2px dashed var(--softrose); border-radius: 10px; color: #999; font-size: 13px; }
 
-/* ---------- Giảm chuyển động (accessibility) ---------- */
 @media (prefers-reduced-motion: reduce) {
   .filmreel { display: none; }
   .hero-bg, .hero-item, .tilt-in { transform: none; filter: none; opacity: 1; animation: none !important; transition: none; }

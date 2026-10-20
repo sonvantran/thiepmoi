@@ -1,16 +1,5 @@
-/* =====================================================================
-   app.js — logic của trang thiệp. Dữ liệu nằm ở js/config.js.
-   Mục lục:
-   1. Helpers & state      6. Album + Lightbox
-   2. Templates (HTML)     7. Hộp mừng cưới
-   3. Toast & Google Sheet 8. RSVP
-   4. Bìa thiệp + hiệu ứng 9. Lời chúc + bong bóng
-   5. Đếm ngược           10. Khởi tạo & điều phối sự kiện
-   ===================================================================== */
 (() => {
   'use strict';
-
-  /* ---------- 1. Helpers & state ---------- */
   const $ = (id) => document.getElementById(id);
   const pad2 = (n) => String(n).padStart(2, '0');
   const rnd = ([min, max]) => min + Math.random() * (max - min);
@@ -18,7 +7,6 @@
   const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ESC_MAP[c]);
 
-  // Ảnh nhẹ do optimize-images.js tạo: thumb (album, cuộn phim) và large (lightbox, hero)
   const thumbOf = (src) => src.replace('images/', 'images/thumb/');
   const largeOf = (src) => src.replace('images/', 'images/large/');
 
@@ -27,18 +15,17 @@
       try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
     },
     set(key, value) {
-      try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* bỏ qua nếu bị chặn */ }
+      try { localStorage.setItem(key, JSON.stringify(value)); } catch { }
     },
   };
 
   const state = {
-    opened: false,       // khách đã mở bìa thiệp chưa
+    opened: false,
     lightboxIndex: 0,
     wishes: [],
     bubbleQueue: [],
   };
 
-  /* ---------- 2. Templates (HTML) ---------- */
   const ACCENT = {
     burgundy: { border: 'border-burgundy', text: 'text-burgundy' },
     rosegold: { border: 'border-rosegold', text: 'text-rosegold' },
@@ -93,8 +80,6 @@
   const galleryTileHTML = (src, i) => {
     const [dc, dr, mc, mr] = GALLERY.spans[i] ?? GALLERY.defaultSpan;
     const seal = i % 2 ? `<div class="seal bow">${BOW_SVG}</div>` : `<div class="seal"><i class="fas fa-heart"></i></div>`;
-    // Vị trí cắt ảnh: PC lấy từ GALLERY.focus, điện thoại lấy từ GALLERY.focusMobile
-    // (không khai báo focusMobile thì dùng lại giá trị của PC). CSS chọn giá trị theo độ rộng màn hình.
     const focusPc = GALLERY.focus?.[src] ?? '50% 50%';
     const focusM = GALLERY.focusMobile?.[src] ?? focusPc;
     return `
@@ -125,7 +110,6 @@
 
   const renderList = (id, items, templateFn) => { $(id).innerHTML = items.map(templateFn).join(''); };
 
-  /* ---------- 3. Toast & Google Sheet ---------- */
   let toastTimer;
   function showToast(msg) {
     const toast = $('toast');
@@ -135,7 +119,6 @@
     toastTimer = setTimeout(() => toast.classList.add('opacity-0', 'pointer-events-none'), 3000);
   }
 
-  // Gửi dữ liệu (lời chúc / RSVP) lên Google Apps Script. Trả về true nếu có gửi.
   async function postToSheet(payload) {
     if (!CONFIG.wishApiUrl) return false;
     try {
@@ -146,7 +129,6 @@
     } catch { return false; }
   }
 
-  /* ---------- 4. Bìa thiệp + hiệu ứng mở đầu ---------- */
   const audio = () => $('weddingAudio');
 
   function setMusicUI(playing) {
@@ -177,7 +159,6 @@
     }
   }
 
-  // Dải phim chạy ngang rồi mờ dần để lộ ảnh đầu trang. onDone chỉ chạy 1 lần.
   function playFilmReel(onDone) {
     let finished = false;
     const finish = () => { if (!finished) { finished = true; onDone(); } };
@@ -204,7 +185,6 @@
     createPetals();
   }
 
-  // Hiệu ứng khi cuộn tới: thêm class .seen cho phần tử khớp selector
   function observeReveal(selector) {
     const io = new IntersectionObserver((entries) => entries.forEach((en) => {
       if (en.isIntersecting) { en.target.classList.add('seen'); io.unobserve(en.target); }
@@ -216,7 +196,6 @@
     });
   }
 
-  /* ---------- 5. Đếm ngược ---------- */
   function startCountdown() {
     const target = new Date(CONFIG.weddingDate).getTime();
     const units = { days: $('days'), hours: $('hours'), minutes: $('minutes'), seconds: $('seconds') };
@@ -238,7 +217,6 @@
     tick();
   }
 
-  /* ---------- 6. Album + Lightbox ---------- */
   function showLightboxImage(index) {
     const n = GALLERY.images.length;
     state.lightboxIndex = (index + n) % n;
@@ -248,7 +226,6 @@
   const openLightbox = (i) => { showLightboxImage(i); $('lightboxModal').classList.remove('hidden'); };
   const closeLightbox = () => $('lightboxModal').classList.add('hidden');
 
-  /* ---------- 7. Hộp mừng cưới ---------- */
   function toggleGift() {
     const box = $('giftQr');
     const open = box.classList.toggle('open');
@@ -257,7 +234,6 @@
     box.setAttribute('aria-hidden', !open);
   }
 
-  // Ảnh QR chưa có / lỗi tải -> hiện khung "Chưa có ảnh QR"
   function setupQrFallback() {
     const showMissing = (img) => {
       const div = document.createElement('div');
@@ -271,7 +247,6 @@
     });
   }
 
-  /* ---------- 8. RSVP ---------- */
   const openRsvp = () => $('rsvpModal').classList.remove('hidden');
   const closeRsvp = () => $('rsvpModal').classList.add('hidden');
 
@@ -289,14 +264,13 @@
     $('rsvpForm').reset();
   }
 
-  /* ---------- 9. Lời chúc + bong bóng ---------- */
   async function fetchWishes() {
     if (CONFIG.wishApiUrl) {
       try {
         const res = await fetch(CONFIG.wishApiUrl, { cache: 'no-store' });
         const data = await res.json();
         if (Array.isArray(data)) return data;
-      } catch { /* rơi xuống localStorage */ }
+      } catch { }
     }
     return store.get('weddingWishes', INITIAL_WISHES);
   }
@@ -344,8 +318,6 @@
     setTimeout(bubbleLoop, rnd(CONFIG.bubbleGapMs));
   }
 
-  /* ---------- 10. Khởi tạo & điều phối sự kiện ---------- */
-  // Mỗi nút trong HTML khai báo data-action="<tên>"; thêm hành động mới chỉ cần thêm 1 dòng ở đây.
   const ACTIONS = {
     'open-invitation': openInvitation,
     'toggle-music': () => toggleMusic(),
@@ -359,7 +331,6 @@
   };
 
   function init() {
-    // Dựng giao diện từ dữ liệu
     renderList('familyCards', FAMILIES, familyCardHTML);
     renderList('eventCards', EVENTS, eventCardHTML);
     renderList('galleryGrid', GALLERY.images, galleryTileHTML);
@@ -367,12 +338,10 @@
     observeReveal('#galleryGrid .letter');
     setupQrFallback();
 
-    // Tải trước ảnh trong lúc khách còn ở bìa thiệp
     const preload = (url) => { new Image().src = url; };
     CONFIG.filmReel.photos.forEach((n) => preload(`images/thumb/anh${pad2(n)}.JPG`));
     preload('images/large/anh10.JPG');
 
-    // Sự kiện
     document.addEventListener('click', (e) => {
       const el = e.target.closest('[data-action]');
       if (el) ACTIONS[el.dataset.action]?.(el);
@@ -380,7 +349,6 @@
     $('wishForm').addEventListener('submit', handleWishSubmit);
     $('rsvpForm').addEventListener('submit', handleRsvpSubmit);
 
-    // Tác vụ nền
     startCountdown();
     loadWishes();
     setTimeout(bubbleLoop, 2000);
