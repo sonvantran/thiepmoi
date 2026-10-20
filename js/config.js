@@ -6,7 +6,7 @@
 /* ---------- Cài đặt chung ---------- */
 const CONFIG = {
   // Mốc đếm ngược
-  weddingDate: '2026-11-28T17:00:00+07:00',
+  weddingDate: '2026-11-29T07:00:00+07:00',
 
   // Link Web App Google Apps Script (lưu lời chúc + RSVP vào Google Sheet).
   // Để trống '' = chỉ lưu tạm trên máy khách.
