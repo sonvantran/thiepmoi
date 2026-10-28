@@ -177,6 +177,15 @@
     setTimeout(() => reel.remove(), CONFIG.filmReel.durationMs + 1200);
   }
 
+  function showGuestName() {
+    let name = (new URLSearchParams(location.search).get('ten') || '').trim();
+    if (!name) return;
+    // "AnhTuan" -> "Anh Tuan" (chỉ khi không có dấu cách)
+    if (!/\s/.test(name)) name = name.replace(/(\p{Ll})(\p{Lu})/gu, '$1 $2');
+    $('guestName').textContent = name.slice(0, 60); // textContent nên an toàn, không bị chèn mã
+    $('guestBox').classList.remove('hidden');
+  }
+
   function openInvitation() {
     state.opened = true;
     $('envelopeCover').classList.add('opacity-0', 'pointer-events-none');
@@ -337,6 +346,7 @@
     observeReveal('#familyCards .tilt-in');
     observeReveal('#galleryGrid .letter');
     setupQrFallback();
+    showGuestName();
 
     const preload = (url) => { new Image().src = url; };
     CONFIG.filmReel.photos.forEach((n) => preload(`images/thumb/anh${pad2(n)}.JPG`));
