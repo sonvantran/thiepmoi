@@ -43,13 +43,13 @@
         <img src="${f.photo}" alt="${f.photoAlt}" class="w-full h-full object-cover" style="object-position:${f.photoPosition ?? '50% 50%'};transform:scale(${f.photoZoom ?? 1});transform-origin:${f.photoFocus}">
       </div>
       <h3 class="font-dancing text-4xl font-bold text-burgundy mb-2">${f.name}</h3>
-      <p class="text-xs font-semibold text-rosegold uppercase tracking-wider mb-4">${f.role}</p>
-      <p class="text-gray-600 text-sm leading-relaxed mb-6">${f.bio}</p>
+      <p class="text-xs font-semibold text-rosegold uppercase tracking-wider mb-4">${tr(f.role)}</p>
+      <p class="text-gray-600 text-sm leading-relaxed mb-6">${tr(f.bio)}</p>
       <div class="border-t border-gray-100 pt-4 text-xs text-gray-500 space-y-1">
-        <p class="font-bold text-gray-700">${f.familyLabel}:</p>
-        <p>Thân phụ: ${f.father}</p>
-        <p>Thân mẫu: ${f.mother}</p>
-        <p class="text-gray-400 italic">${f.address}</p>
+        <p class="font-bold text-gray-700">${tr(f.familyLabel)}:</p>
+        <p>${tr('Thân phụ')}: ${tr(f.father)}</p>
+        <p>${tr('Thân mẫu')}: ${tr(f.mother)}</p>
+        <p class="text-gray-400 italic">${tr(f.address)}</p>
       </div>
     </div>`;
 
@@ -59,19 +59,19 @@
     <div class="bg-white rounded-2xl p-8 shadow-lg border-l-4 ${a.border} flex flex-col justify-between">
       <div>
         <div class="flex justify-between items-start mb-4">
-          <span class="${e.badgeClass} font-semibold text-xs px-3 py-1 rounded-full uppercase">${e.badge}</span>
+          <span class="${e.badgeClass} font-semibold text-xs px-3 py-1 rounded-full uppercase">${tr(e.badge)}</span>
           <i class="fas ${e.icon} ${a.text} text-xl"></i>
         </div>
-        <h3 class="font-playfair text-2xl font-bold text-gray-800 mb-2">${e.title}</h3>
-        <p class="text-sm text-gray-600 mb-4"><i class="far fa-clock ${a.text} mr-2"></i> ${e.time}</p>
-        <p class="text-sm text-gray-600 mb-6"><i class="fas fa-map-marker-alt ${a.text} mr-2"></i> ${e.place}</p>
+        <h3 class="font-playfair text-2xl font-bold text-gray-800 mb-2">${tr(e.title)}</h3>
+        <p class="text-sm text-gray-600 mb-4"><i class="far fa-clock ${a.text} mr-2"></i> ${tr(e.time)}</p>
+        <p class="text-sm text-gray-600 mb-6"><i class="fas fa-map-marker-alt ${a.text} mr-2"></i> ${tr(e.place)}</p>
       </div>
       <div class="flex gap-3 pt-4 border-t border-gray-100">
         <a href="${e.mapUrl}" target="_blank" rel="noopener" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 text-center text-xs py-2.5 rounded-lg font-medium transition">
-          <i class="fas fa-map-marked-alt mr-1"></i> Xem Bản Đồ
+          <i class="fas fa-map-marked-alt mr-1"></i> ${tr('Xem Bản Đồ')}
         </a>
         <button data-action="open-rsvp" class="flex-1 bg-burgundy hover:bg-rose-900 text-amber-100 text-xs py-2.5 rounded-lg font-medium transition">
-          <i class="fas fa-check-circle mr-1"></i> Xác Nhận
+          <i class="fas fa-check-circle mr-1"></i> ${tr('Xác Nhận')}
         </button>
       </div>
     </div>`;
@@ -101,7 +101,7 @@
       <div>
         <div class="flex justify-between items-center mb-1">
           <span class="font-bold text-sm text-burgundy">${esc(w.name)}</span>
-          <span class="text-[10px] bg-softrose/30 text-burgundy px-2 py-0.5 rounded-full font-medium">${esc(w.role)}</span>
+          <span class="text-[10px] bg-softrose/30 text-burgundy px-2 py-0.5 rounded-full font-medium">${esc(tr(w.role))}</span>
         </div>
         <p class="text-xs text-gray-600 leading-relaxed">${esc(w.message)}</p>
       </div>
@@ -212,7 +212,7 @@
     const tick = () => {
       const left = target - Date.now();
       if (left < 0) {
-        $('countdown').innerHTML = "<p class='col-span-4 text-white font-bold text-xl'>Lễ cưới đã diễn ra!</p>";
+        $('countdown').innerHTML = `<p class='col-span-4 text-white font-bold text-xl'>${tr('Lễ cưới đã diễn ra!')}</p>`;
         clearInterval(timer);
         return;
       }
@@ -247,7 +247,7 @@
     const showMissing = (img) => {
       const div = document.createElement('div');
       div.className = 'qr-missing';
-      div.textContent = 'Chưa có ảnh QR';
+      div.textContent = tr('Chưa có ảnh QR');
       img.replaceWith(div);
     };
     document.querySelectorAll('.qr-img').forEach((img) => {
@@ -263,13 +263,14 @@
     e.preventDefault();
     await postToSheet({
       type: 'rsvp',
+      lang: LANG,
       name: $('rsvpName').value.trim(),
       phone: $('rsvpPhone').value.trim(),
       status: $('rsvpStatus').value,
       count: $('rsvpCount').value,
     });
     closeRsvp();
-    showToast('Cảm ơn bạn đã xác nhận tham dự!');
+    showToast(tr('Cảm ơn bạn đã xác nhận tham dự!'));
     $('rsvpForm').reset();
   }
 
@@ -295,6 +296,7 @@
       name: $('wishName').value.trim(),
       role: $('wishRole').value,
       message: $('wishMessage').value.trim(),
+      lang: LANG,
     };
     if (CONFIG.wishApiUrl) {
       await postToSheet(wish);
@@ -305,7 +307,7 @@
     renderList('wishesContainer', state.wishes, wishCardHTML);
     spawnBubble(wish);
     $('wishForm').reset();
-    showToast('Cảm ơn bạn đã gửi lời chúc mừng!');
+    showToast(tr('Cảm ơn bạn đã gửi lời chúc mừng!'));
   }
 
   function spawnBubble(wish) {
