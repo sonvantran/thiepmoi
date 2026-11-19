@@ -208,3 +208,6 @@ html[lang="ko"] body { word-break: keep-all; }
 html[lang="ko"] .font-dancing    { font-family: 'Dancing Script', 'Noto Serif KR', serif; }
 html[lang="ko"] .font-playfair   { font-family: 'Playfair Display', 'Noto Serif KR', serif; }
 html[lang="ko"] .font-montserrat { font-family: 'Montserrat', 'Noto Sans KR', sans-serif; }
+html[lang="zh-CN"] .font-dancing    { font-family: 'Dancing Script', 'Noto Serif SC', serif; }
+html[lang="zh-CN"] .font-playfair   { font-family: 'Playfair Display', 'Noto Serif SC', serif; }
+html[lang="zh-CN"] .font-montserrat { font-family: 'Montserrat', 'Noto Sans SC', sans-serif; }

@@ -2,10 +2,12 @@
 const LANG = (() => {
   let l = (new URLSearchParams(location.search).get('ngonngu') || 'vi').toLowerCase();
   if (l === 'kr') l = 'ko';
-  return ['vi', 'en', 'ko'].includes(l) ? l : 'vi';
+  if (l === 'cn' || l === 'zh-cn') l = 'zh';
+  return ['vi', 'en', 'ko', 'zh'].includes(l) ? l : 'vi';
 })();
 
 // 'Chữ tiếng Việt gốc': ['English', '한국어']
+
 const T = {
   // ---- Bìa & header ----
   'Save The Date': ['Save The Date', '날짜를 기억해 주세요'],
@@ -92,11 +94,92 @@ const T = {
   'Bấm để mở hộp quà': ['Tap to open the gift box', '선물 상자를 열어 보세요'],
   'Thiệp Cưới Văn Sơn & Thanh Nhàn': ['Wedding Invitation – Văn Sơn & Thanh Nhàn', '청첩장 – Văn Sơn & Thanh Nhàn'],
 };
+// Tiếng Trung giản thể: 'Chữ tiếng Việt gốc': '中文'
+const ZH = {
+  'Save The Date': '请记住这一天',
+  '"Trân trọng kính mời quý vị tới tham dự lễ thành hôn của chúng tôi"': '“诚挚邀请您莅临我们的婚礼，与我们共同见证幸福时刻”',
+  'Kính mời': '敬邀',
+  'CHẠM ĐỂ MỞ THIỆP': '点击打开请柬',
+  'Cặp Đôi': '新人',
+  'Sự Kiện': '活动',
+  'Album Ảnh': '相册',
+  'Mừng Cưới': '礼金',
+  'Sổ Lưu Bút': '留言簿',
+  'Xác Nhận Tham Dự': '确认出席',
+  'Chúng Tôi Sắp Kết Hôn': '我们要结婚了',
+  'Hành trình yêu thương bước sang trang mới rực rỡ và đong đầy hạnh phúc.': '爱的旅程翻开崭新而灿烂的一页，充满幸福。',
+  'Ngày': '天', 'Giờ': '时', 'Phút': '分', 'Giây': '秒',
+  'Chú Rể & Cô Dâu': '新郎 & 新娘',
+  'Thông Tin Hai Bên Gia Đình': '双方家庭',
+  'Chú Rể': '新郎', 'Cô Dâu': '新娘',
+  'Chàng trai hiền lành, chu đáo và luôn đong đầy yêu thương.': '温和体贴，心中永远充满爱的男孩。',
+  'Cô gái dịu dàng, tinh tế và đầy nhiệt huyết.': '温柔细腻、充满热情的女孩。',
+  'Nhà Trai': '男方家庭', 'Nhà Gái': '女方家庭',
+  'Thân phụ': '父亲', 'Thân mẫu': '母亲',
+  'Ông Trần Văn Thanh': 'Trần Văn Thanh 先生',
+  'Bà Tạ Thị Thạnh': 'Tạ Thị Thạnh 女士',
+  'Ông Nguyễn Văn Thắng': 'Nguyễn Văn Thắng 先生',
+  'Bà Nguyễn Thị Hương': 'Nguyễn Thị Hương 女士',
+  'Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội': '越南河内 · No. 531, TL 421B Road, Dong Ha Hamlet, Phu Cat Commune',
+  'Xóm Phú Cường, xã Phú Thịnh, Thái Nguyên': '越南太原省 · Phu Cuong Hamlet, Phu Thinh Commune',
+  'Lịch Trình': '日程',
+  'Sự Kiện Trọng Đại': '婚礼活动',
+  'Tiệc Cưới': '婚宴',
+  'Lễ Vu Quy': '出嫁仪式 (Vu Quy)',
+  'Lễ Thành Hôn': '婚礼仪式',
+  'Tiệc Cưới Nhà Trai': '男方婚宴',
+  'Tiệc Cưới Nhà Gái': '女方婚宴',
+  'Lễ Ăn Hỏi & Đón Dâu Nhà Gái': '订婚仪式及迎亲（女方家）',
+  'Lễ Thành Hôn Nhà Trai': '男方家婚礼仪式',
+  '17h Ngày 28 tháng 11 năm 2026': '2026年11月28日 下午5点',
+  '7h Ngày 29 tháng 11 năm 2026': '2026年11月29日 上午7点',
+  '11h Ngày 29 tháng 11 năm 2026': '2026年11月29日 上午11点',
+  'Nhà trai - Số nhà 531, đường TL 421B, thôn Đông Hạ, xã Phú Cát, Hà Nội': '男方家 – No. 531, TL 421B Road, Dong Ha Hamlet, Phu Cat Commune, Hanoi',
+  'Nhà gái - Xóm Phú Cường, xã Phú Thịnh, Thái Nguyên': '女方家 – Phu Cuong Hamlet, Phu Thinh Commune, Thai Nguyen',
+  'Xem Bản Đồ': '查看地图',
+  'Xác Nhận': '确认出席',
+  'Kỷ Niệm': '回忆',
+  'Album Ảnh Cưới': '婚纱相册',
+  'Hộp Mừng Cưới': '礼金盒',
+  'Cảm ơn tất cả các tình cảm mà mọi người đã dành cho vợ chồng em': '感谢大家对我们的关爱与祝福。',
+  'Chạm vào hộp quà': '点击礼盒',
+  'Chú Rể Văn Sơn': '新郎 Văn Sơn',
+  'Cô Dâu Thanh Nhàn': '新娘 Thanh Nhàn',
+  'Chưa có ảnh QR': '二维码暂未提供',
+  'Gửi Lời Chúc': '送上祝福',
+  'Sổ Lưu Bút Online': '线上留言簿',
+  'Tên của bạn *': '您的姓名 *',
+  'Mối quan hệ': '关系',
+  'Bạn Chú Rể': '新郎的朋友',
+  'Bạn Cô Dâu': '新娘的朋友',
+  'Người Thân': '亲属',
+  'Đồng Nghiệp': '同事',
+  'Lời chúc mừng *': '祝福留言 *',
+  'Nhập tên...': '请输入姓名...',
+  'Gửi những lời chúc tốt đẹp nhất...': '写下您最美好的祝福...',
+  'Vui lòng phản hồi trước ngày 25/11/2026 để chuẩn bị đón tiếp chu đáo nhất.': '请于2026年11月25日前回复，以便我们周到地接待您。',
+  'Họ và Tên *': '姓名 *',
+  'Số Điện Thoại': '电话号码',
+  'Xác nhận tham dự': '是否出席',
+  'Sẽ tham dự tiệc': '我会出席',
+  'Rất tiếc không thể tham dự': '很遗憾无法出席',
+  'Số người tham dự': '出席人数',
+  'Gửi Phản Hồi': '提交回复',
+  'Cảm ơn bạn đã xác nhận tham dự!': '感谢您的出席回复！',
+  'Cảm ơn bạn đã gửi lời chúc mừng!': '感谢您的祝福！',
+  'Lễ cưới đã diễn ra!': '婚礼已圆满举行！',
+  'Bật/tắt nhạc': '开关音乐',
+  'Đóng': '关闭', 'Ảnh trước': '上一张', 'Ảnh sau': '下一张',
+  'Bấm để mở hộp quà': '点击打开礼盒',
+  'Thiệp Cưới Văn Sơn & Thanh Nhàn': '婚礼请柬 – Văn Sơn & Thanh Nhàn',
+};
 
 // Dịch 1 chuỗi (không có trong từ điển thì giữ nguyên)
 function tr(s) {
   if (LANG === 'vi') return s;
-  const hit = T[String(s ?? '').trim()];
+  const key = String(s ?? '').trim();
+  if (LANG === 'zh') return ZH[key] ?? s;
+  const hit = T[key];
   return hit ? hit[LANG === 'en' ? 0 : 1] : s;
 }
 
@@ -124,5 +207,5 @@ function applyStaticI18n() {
   });
 }
 
-document.documentElement.lang = LANG;
+document.documentElement.lang = LANG === 'zh' ? 'zh-CN' : LANG;
 document.addEventListener('DOMContentLoaded', applyStaticI18n);
